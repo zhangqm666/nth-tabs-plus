@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <title>nth-tabs by nethuige</title>
+    <meta name="keywords" content="nth-tabs">
+    <meta name="description" content="nth-tabs">
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="lib/jquery/jquery-3.2.1.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js">ss</script>
+    <link href="css/nth-tabs.css" rel="stylesheet">
+    <script src="js/nth-tabs.js"></script>
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        .wrapper {
+            padding-top: 10px;
+            height: calc(100% - 220px);
+        }
+
+        .page-wrapper {
+            overflow: hidden;
+            height: 100%;
+        }
+    </style>
+    <script>
+
+        var nthTabs;
+
+        $(function () {
+
+            //一个低门槛的演示,更多需求看源码
+
+            //基于bootstrap tab的自定义多标签的jquery实用插件
+            nthTabs = $("#main-tabs").nthTabs();
+
+            // 新建选项卡示例
+            nthTabs.addTab({
+                id: 'home',
+                title: '首 页',
+                //url: "http://www.baidu.com",
+                content: '这是首页',
+                active: true,
+                allowClose: false
+            });
+
+            // 连贯操作示例
+            nthTabs.addTab({
+                id: 'menu-manage',
+                title: '菜单管理',
+                active: false,
+                content: '这是菜单管理页面~'
+            }).addTab({
+                id: 'role-manage',
+                title: '角色管理',
+                active: false,
+                content: '这是角色管理页面~'
+            });
+
+            // 新建选项卡(自定义内容)
+            $("#add-tab-content").on("click", function () {
+                var id = Math.ceil(Math.random() * 1000);
+                nthTabs.addTab({
+                    id: "nth-tab-" + id,
+                    title: '选项卡-' + id,
+                    content: '选项卡内容' + id,
+                    active: true,
+                    allowClose: true,
+                    location: true,
+                    fadeIn: false
+                })
+            });
+
+            // 新建选项卡(URL地址)
+            $("#add-tab-url").on("click", function () {
+                var id = Math.ceil(Math.random() * 1000);
+                nthTabs.addTab({
+                    id: "nth-tab-" + id,
+                    title: 'URL选项卡-' + id,
+                    url: "http://www.nethuige.com",
+                    active: true,
+                    allowClose: true,
+                    location: false,
+                    fadeIn: true
+                });
+            });
+
+            // 新建选项卡(URL地址)
+            $("#add-tabs").on("click", function () {
+                // 批量新建选项卡
+                nthTabs.addTabs([{
+                    id: 'user-manage',
+                    title: '用户管理',
+                    content: '这是用户管理页面~'
+                }, {
+                    id: 'auth-manage',
+                    title: '权限管理',
+                    content: '这是权限管理页面~'
+                }]);
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="container wrapper">
+    <div class="page-wrapper">
+        <!--使用时只需此标签，class固定,id自己定义-->
+        <div class="nth-tabs" id="main-tabs">
+        </div>
+    </div>
+    <div style="margin-top:20px;">
+        <div style="line-height:50px;">
+            <button type="button" class="btn btn-primary" id="add-tab-content">新建选项卡(自定义内容)</button>
+            <button type="button" class="btn btn-primary" id="add-tab-url">新建选项卡(URL地址)</button>
+            <button type="button" class="btn btn-primary" id="add-tabs">批量新建选项卡</button>
+            <button type="button" class="btn btn-info" onclick="nthTabs.setActTab('role-manage');">置活动选项卡(角色管理)</button>
+            <button type="button" class="btn btn-info" onclick="nthTabs.toggleTab('menu-manage')">切换选项卡(菜单管理)</button>
+            <button type="button" class="btn btn-info" onclick="nthTabs.locationTab('home')">定位选项卡</button>
+            <button type="button" class="btn btn-danger" onclick="nthTabs.delTab('role-manage')">关闭选项卡(角色管理)</button>
+            <button type="button" class="btn btn-danger" onclick="nthTabs.delOtherTab()">关闭其他</button>
+            <button type="button" class="btn btn-danger" onclick="nthTabs.delAllTab()">关闭所有</button>
+            <button type="button" class="btn btn-warning" onclick="$('.roll-nav-left').click()">左滑动</button>
+            <button type="button" class="btn btn-warning" onclick="$('.roll-nav-right').click()">右滑动</button>
+            <button type="button" class="btn btn-success" onclick="alert(nthTabs.getMarginStep())">获取左右滑动步值</button>
+            <button type="button" class="btn btn-success" onclick="alert(nthTabs.getActiveId())">获取当前选项卡ID</button>
+            <button type="button" class="btn btn-success" onclick="alert(nthTabs.getAllTabWidth())">获取所有选项卡宽度</button>
+            <button type="button" class="btn btn-success" onclick="console.log(nthTabs.getTabList());alert(nthTabs.getTabList())">获取所有选项卡</button>
+            <button type="button" class="btn btn-success" onclick="alert(nthTabs.isExistsTab('menu-manage'))">获取指定选项卡是否存在</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
